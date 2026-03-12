@@ -20,10 +20,6 @@ jobs:
             arch: arm64
             executable: gitee
             target_ext: ''
-          - os: windows-latest
-            arch: amd64
-            executable: gitee.exe
-            target_ext: '.exe'
 
     runs-on: ${{ matrix.os }}
 
@@ -51,7 +47,7 @@ jobs:
         run: |
           docker run --rm --entrypoint bash -v ${{ github.workspace }}:/app -w /app \
           ghcr.io/graalvm/native-image-community:21-ol8 \
-          -c "microdnf install -y tar gzip && curl -sL https://archive.apache.org/dist/maven/maven-3/3.9.6/binaries/apache-maven-3.9.6-bin.tar.gz | tar xz -C /opt && export JAVA_TOOL_OPTIONS='-Dfile.encoding=UTF-8' && /opt/apache-maven-3.9.6/bin/mvn clean package -Pnative && chmod -R 777 target"
+          -c "microdnf install -y tar gzip glibc-langpack-en && export LANG=en_US.UTF-8 && export LC_ALL=en_US.UTF-8 && curl -sL https://archive.apache.org/dist/maven/maven-3/3.9.6/binaries/apache-maven-3.9.6-bin.tar.gz | tar xz -C /opt && export JAVA_TOOL_OPTIONS='-Dfile.encoding=UTF-8' && /opt/apache-maven-3.9.6/bin/mvn clean package -Pnative && chmod -R 777 target"
 
       # 👇 3. 统一重命名并上传 (所有架构共用)
       - name: 📦 重命名产物并准备上传
