@@ -5,6 +5,8 @@ import com.gitee.cli.OutputHelper;
 import com.gitee.cli.command.BaseCommand;
 import picocli.CommandLine.Command;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 /**
@@ -22,14 +24,10 @@ public class RepoViewCommand extends BaseCommand {
     @Override
     public void run() {
         var repo = requireRepo();
-        var parts = splitRepo(repo);
-        var owner = parts[0];
-        var repoName = parts[1];
 
         // GET /repos/{owner}/{repo}
         var repoInfo = GiteeApiClient.getInstance().get(
-                "/repos/" + owner + "/" + repoName,
-                null);
+                "/projects/" + URLEncoder.encode(repo, StandardCharsets.UTF_8), null);
 
         if (isJsonOutput()) {
             OutputHelper.printJson(repoInfo);
@@ -48,7 +46,7 @@ public class RepoViewCommand extends BaseCommand {
             // 尝试获取 README
             try {
                 var readme = GiteeApiClient.getInstance().get(
-                        "/repos/" + owner + "/" + repoName + "/readme",
+                        "/projects/" + URLEncoder.encode(repo, StandardCharsets.UTF_8) + "/readme",
                         null);
                 var content = readme.path("content").asText("");
                 if (!content.isEmpty()) {

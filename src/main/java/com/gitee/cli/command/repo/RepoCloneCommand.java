@@ -33,7 +33,7 @@ public class RepoCloneCommand extends BaseCommand {
 
         // GET /repos/{owner}/{repo} 获取 clone URL
         var repoInfo = GiteeApiClient.getInstance().get(
-                "/repos/" + owner + "/" + repoName,
+                "/projects/" + owner + "/" + repoName,
                 null);
 
         var cloneUrl = useSsh
