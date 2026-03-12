@@ -3,6 +3,7 @@ package com.gitee.cli;
 import java.io.FileDescriptor;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
+import java.util.Arrays;
 
 import com.gitee.cli.command.auth.AuthCommand;
 import com.gitee.cli.command.config.ConfigCommand;
@@ -56,13 +57,10 @@ public class GiteeCliCommand implements Runnable {
     // ── 入口 ──────────────────────────────────────────────────
 
     public static void main(String[] args) {
-        String os = System.getProperty("os.name").toLowerCase();
-
-        // 1. 拦截底层输出流：如果是 Windows，且是人类在测试，且不是 JSON 模式，强行用 GBK 翻译输出！
-        if (os.contains("windows") && System.console() != null) {
+        // 如果大模型带了 --json 参数，强行将底层输出流锁死为 UTF-8，防止解析崩溃
+        if (Arrays.asList(args).contains("--json")) {
             try {
-                System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out), true,
-                        "GBK"));
+                System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out), true, "UTF-8"));
             } catch (Exception ignored) {
             }
         }

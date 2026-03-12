@@ -14,6 +14,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
 
@@ -138,7 +139,7 @@
                                 <buildArg>--enable-https</buildArg>
                                 <buildArg>-H:+ReportExceptionStackTraces</buildArg>
                                 <buildArg>-H:+AddAllCharsets</buildArg>
-                                <buildArg>-Dfile.encoding=UTF-8</buildArg>
+                                <buildArg>-Dfile.encoding=COMPAT</buildArg>
                             </buildArgs>    
                         </configuration>
                     </plugin>
