@@ -1,0 +1,54 @@
+name: Build and Release gitee-cli
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  # 也可以支持手动触发流水线，测试时非常方便
+  workflow_dispatch: 
+
+jobs:
+  build:
+    name: Build on ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            arch: amd64
+            executable: gitee
+            target_ext: ''
+          - os: ubuntu-24.04-arm
+            arch: arm64
+            executable: gitee
+            target_ext: ''
+          - os: windows-latest
+            arch: amd64
+            executable: gitee.exe
+            target_ext: '.exe'
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: 📥 拉取代码
+        uses: actions/checkout@v4
+
+      - name: ☕ 设置 GraalVM 21
+        uses: graalvm/setup-graalvm@v1
+        with:
+          java-version: '21'
+          distribution: 'graalvm-community'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 🔨 执行 Maven 原生编译 (Native Image)
+        run: mvn clean package -Pnative
+
+      - name: 📦 重命名产物并准备上传
+        run: |
+          mv target/${{ matrix.executable }} target/gitee-cli-${{ runner.os }}-${{ matrix.arch }}${{ matrix.target_ext }}
+        shell: bash
+
+      - name: 🚀 上传编译好的二进制文件
+        uses: actions/upload-artifact@v4
+        with:
+          name: gitee-cli-${{ runner.os }}-${{ matrix.arch }}
+          path: target/gitee-cli-*
+          retention-days: 7
