@@ -1,0 +1,322 @@
+[
+  {
+    "name" : "com.gitee.cli.GiteeCliCommand",
+    "allDeclaredConstructors" : true,
+    "allPublicConstructors" : true,
+    "allDeclaredMethods" : true,
+    "allPublicMethods" : true,
+    "fields" : [
+      { "name" : "debug" },
+      { "name" : "jsonOutput" },
+      { "name" : "repo" }
+    ]
+  },
+  {
+    "name" : "com.gitee.cli.command.auth.AuthCommand",
+    "allDeclaredConstructors" : true,
+    "allPublicConstructors" : true,
+    "allDeclaredMethods" : true,
+    "allPublicMethods" : true
+  },
+  {
+    "name" : "com.gitee.cli.command.auth.AuthLoginCommand",
+    "allDeclaredConstructors" : true,
+    "allPublicConstructors" : true,
+    "allDeclaredMethods" : true,
+    "allPublicMethods" : true,
+    "fields" : [
+      { "name" : "token" }
+    ]
+  },
+  {
+    "name" : "com.gitee.cli.command.auth.AuthLogoutCommand",
+    "allDeclaredConstructors" : true,
+    "allPublicConstructors" : true,
+    "allDeclaredMethods" : true,
+    "allPublicMethods" : true
+  },
+  {
+    "name" : "com.gitee.cli.command.auth.AuthStatusCommand",
+    "allDeclaredConstructors" : true,
+    "allPublicConstructors" : true,
+    "allDeclaredMethods" : true,
+    "allPublicMethods" : true
+  },
+  {
+    "name" : "com.gitee.cli.command.config.ConfigCommand",
+    "allDeclaredConstructors" : true,
+    "allPublicConstructors" : true,
+    "allDeclaredMethods" : true,
+    "allPublicMethods" : true
+  },
+  {
+    "name" : "com.gitee.cli.command.config.ConfigGetCommand",
+    "allDeclaredConstructors" : true,
+    "allPublicConstructors" : true,
+    "allDeclaredMethods" : true,
+    "allPublicMethods" : true,
+    "fields" : [
+      { "name" : "key" }
+    ]
+  },
+  {
+    "name" : "com.gitee.cli.command.config.ConfigListCommand",
+    "allDeclaredConstructors" : true,
+    "allPublicConstructors" : true,
+    "allDeclaredMethods" : true,
+    "allPublicMethods" : true
+  },
+  {
+    "name" : "com.gitee.cli.command.config.ConfigSetCommand",
+    "allDeclaredConstructors" : true,
+    "allPublicConstructors" : true,
+    "allDeclaredMethods" : true,
+    "allPublicMethods" : true,
+    "fields" : [
+      { "name" : "key" },
+      { "name" : "value" }
+    ]
+  },
+  {
+    "name" : "com.gitee.cli.command.issue.IssueCommand",
+    "allDeclaredConstructors" : true,
+    "allPublicConstructors" : true,
+    "allDeclaredMethods" : true,
+    "allPublicMethods" : true
+  },
+  {
+    "name" : "com.gitee.cli.command.issue.IssueCommentCommand",
+    "allDeclaredConstructors" : true,
+    "allPublicConstructors" : true,
+    "allDeclaredMethods" : true,
+    "allPublicMethods" : true,
+    "fields" : [
+      { "name" : "body" },
+      { "name" : "editor" },
+      { "name" : "number" },
+      { "name" : "web" }
+    ]
+  },
+  {
+    "name" : "com.gitee.cli.command.issue.IssueCreateCommand",
+    "allDeclaredConstructors" : true,
+    "allPublicConstructors" : true,
+    "allDeclaredMethods" : true,
+    "allPublicMethods" : true,
+    "fields" : [
+      { "name" : "assignee" },
+      { "name" : "branchName" },
+      { "name" : "description" },
+      { "name" : "dueDate" },
+      { "name" : "iid" },
+      { "name" : "labels" },
+      { "name" : "planStartedAt" },
+      { "name" : "priority" },
+      { "name" : "title" }
+    ]
+  },
+  {
+    "name" : "com.gitee.cli.command.issue.IssueListCommand",
+    "allDeclaredConstructors" : true,
+    "allPublicConstructors" : true,
+    "allDeclaredMethods" : true,
+    "allPublicMethods" : true,
+    "fields" : [
+      { "name" : "direction" },
+      { "name" : "page" },
+      { "name" : "perPage" },
+      { "name" : "search" },
+      { "name" : "sort" },
+      { "name" : "state" }
+    ]
+  },
+  {
+    "name" : "com.gitee.cli.command.issue.IssueViewCommand",
+    "allDeclaredConstructors" : true,
+    "allPublicConstructors" : true,
+    "allDeclaredMethods" : true,
+    "allPublicMethods" : true,
+    "fields" : [
+      { "name" : "number" },
+      { "name" : "showComments" }
+    ]
+  },
+  {
+    "name" : "com.gitee.cli.command.pr.PrCloseCommand",
+    "allDeclaredConstructors" : true,
+    "allPublicConstructors" : true,
+    "allDeclaredMethods" : true,
+    "allPublicMethods" : true,
+    "fields" : [
+      { "name" : "number" }
+    ]
+  },
+  {
+    "name" : "com.gitee.cli.command.pr.PrCommand",
+    "allDeclaredConstructors" : true,
+    "allPublicConstructors" : true,
+    "allDeclaredMethods" : true,
+    "allPublicMethods" : true
+  },
+  {
+    "name" : "com.gitee.cli.command.pr.PrCommentCommand",
+    "allDeclaredConstructors" : true,
+    "allPublicConstructors" : true,
+    "allDeclaredMethods" : true,
+    "allPublicMethods" : true,
+    "fields" : [
+      { "name" : "body" },
+      { "name" : "number" }
+    ]
+  },
+  {
+    "name" : "com.gitee.cli.command.pr.PrCreateCommand",
+    "allDeclaredConstructors" : true,
+    "allPublicConstructors" : true,
+    "allDeclaredMethods" : true,
+    "allPublicMethods" : true,
+    "fields" : [
+      { "name" : "base" },
+      { "name" : "body" },
+      { "name" : "head" },
+      { "name" : "primaryReviewerIds" },
+      { "name" : "primaryReviewerNum" },
+      { "name" : "removeSourceBranch" },
+      { "name" : "title" }
+    ]
+  },
+  {
+    "name" : "com.gitee.cli.command.pr.PrDiffCommand",
+    "allDeclaredConstructors" : true,
+    "allPublicConstructors" : true,
+    "allDeclaredMethods" : true,
+    "allPublicMethods" : true,
+    "fields" : [
+      { "name" : "number" }
+    ]
+  },
+  {
+    "name" : "com.gitee.cli.command.pr.PrEditCommand",
+    "allDeclaredConstructors" : true,
+    "allPublicConstructors" : true,
+    "allDeclaredMethods" : true,
+    "allPublicMethods" : true,
+    "fields" : [
+      { "name" : "body" },
+      { "name" : "number" },
+      { "name" : "stateEvent" },
+      { "name" : "title" }
+    ]
+  },
+  {
+    "name" : "com.gitee.cli.command.pr.PrListCommand",
+    "allDeclaredConstructors" : true,
+    "allPublicConstructors" : true,
+    "allDeclaredMethods" : true,
+    "allPublicMethods" : true,
+    "fields" : [
+      { "name" : "page" },
+      { "name" : "perPage" },
+      { "name" : "search" },
+      { "name" : "sort" },
+      { "name" : "source_branch" },
+      { "name" : "state" },
+      { "name" : "target_branch" }
+    ]
+  },
+  {
+    "name" : "com.gitee.cli.command.pr.PrMergeCommand",
+    "allDeclaredConstructors" : true,
+    "allPublicConstructors" : true,
+    "allDeclaredMethods" : true,
+    "allPublicMethods" : true,
+    "fields" : [
+      { "name" : "mergeCommitMessage" },
+      { "name" : "mergeType" },
+      { "name" : "number" },
+      { "name" : "squash" }
+    ]
+  },
+  {
+    "name" : "com.gitee.cli.command.pr.PrReopenCommand",
+    "allDeclaredConstructors" : true,
+    "allPublicConstructors" : true,
+    "allDeclaredMethods" : true,
+    "allPublicMethods" : true,
+    "fields" : [
+      { "name" : "number" }
+    ]
+  },
+  {
+    "name" : "com.gitee.cli.command.pr.PrReviewCommand",
+    "allDeclaredConstructors" : true,
+    "allPublicConstructors" : true,
+    "allDeclaredMethods" : true,
+    "allPublicMethods" : true,
+    "fields" : [
+      { "name" : "body" },
+      { "name" : "number" },
+      { "name" : "state" }
+    ]
+  },
+  {
+    "name" : "com.gitee.cli.command.pr.PrViewCommand",
+    "allDeclaredConstructors" : true,
+    "allPublicConstructors" : true,
+    "allDeclaredMethods" : true,
+    "allPublicMethods" : true,
+    "fields" : [
+      { "name" : "number" }
+    ]
+  },
+  {
+    "name" : "com.gitee.cli.command.repo.RepoCloneCommand",
+    "allDeclaredConstructors" : true,
+    "allPublicConstructors" : true,
+    "allDeclaredMethods" : true,
+    "allPublicMethods" : true,
+    "fields" : [
+      { "name" : "depth" },
+      { "name" : "useSsh" }
+    ]
+  },
+  {
+    "name" : "com.gitee.cli.command.repo.RepoCommand",
+    "allDeclaredConstructors" : true,
+    "allPublicConstructors" : true,
+    "allDeclaredMethods" : true,
+    "allPublicMethods" : true
+  },
+  {
+    "name" : "com.gitee.cli.command.repo.RepoForkCommand",
+    "allDeclaredConstructors" : true,
+    "allPublicConstructors" : true,
+    "allDeclaredMethods" : true,
+    "allPublicMethods" : true
+  },
+  {
+    "name" : "com.gitee.cli.command.repo.RepoViewCommand",
+    "allDeclaredConstructors" : true,
+    "allPublicConstructors" : true,
+    "allDeclaredMethods" : true,
+    "allPublicMethods" : true
+  },
+  {
+    "name" : "java.lang.Integer",
+    "allDeclaredConstructors" : true,
+    "allPublicConstructors" : true,
+    "allDeclaredMethods" : true,
+    "allPublicMethods" : true
+  },
+  {
+    "name" : "picocli.CommandLine$AutoHelpMixin",
+    "allDeclaredConstructors" : true,
+    "allPublicConstructors" : true,
+    "allDeclaredMethods" : true,
+    "allPublicMethods" : true,
+    "fields" : [
+      { "name" : "helpRequested" },
+      { "name" : "versionRequested" }
+    ]
+  }
+]

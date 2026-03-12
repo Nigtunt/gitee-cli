@@ -4,6 +4,9 @@ import java.io.FileDescriptor;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
+
+import org.fusesource.jansi.AnsiConsole;
 
 import com.gitee.cli.command.auth.AuthCommand;
 import com.gitee.cli.command.config.ConfigCommand;
@@ -57,34 +60,27 @@ public class GiteeCliCommand implements Runnable {
     // ── 入口 ──────────────────────────────────────────────────
 
     public static void main(String[] args) {
-        // 1. 抢在 JAnsi 之前，进行最高级别的底层流拦截！
         String os = System.getProperty("os.name").toLowerCase();
 
-        // 只有在 Windows 系统，且是真实人类在 CMD 里敲命令时 (System.console() != null)，才转成 GBK。
-        // 如果是大模型通过 Python 脚本在后台静默调用 (返回 null)，则保持原生 UTF-8 不变！
+        // 1. 拦截底层输出流：如果是 Windows，且是人类在测试，且不是 JSON 模式，强行用 GBK 翻译输出！
         if (os.contains("windows") && System.console() != null) {
             try {
-                // 使用 FileDescriptor.out 绕过 JDK 21 的默认包装，拿到最纯粹的系统输出管道，强制烙上 GBK 编码
                 System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out), true, "GBK"));
-            } catch (UnsupportedEncodingException e) {
-                // 静默忽略，GBK 在 Windows 上一定存在
+            } catch (Exception ignored) {
             }
         }
 
-        // 2. 底层流的编码已经彻底干净了，现在轮到 JAnsi 闪亮登场 (把原本 static 里的代码移到这里)
         try {
-            org.fusesource.jansi.AnsiConsole.systemInstall();
+            AnsiConsole.systemInstall();
         } catch (Exception ignored) {
-            // 在 GraalVM 原生镜像中，如果 jansi.dll 没打进去，这里会静默失败，不影响核心功能
         }
         int exitCode = new CommandLine(new GiteeCliCommand())
                 .setExecutionExceptionHandler(new GlobalExceptionHandler())
                 .execute(args);
-        System.exit(exitCode);
 
         // 4. 优雅卸载 JAnsi
         try {
-            org.fusesource.jansi.AnsiConsole.systemUninstall();
+            AnsiConsole.systemUninstall();
         } catch (Exception ignored) {
         }
 

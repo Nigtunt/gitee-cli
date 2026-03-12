@@ -144,8 +144,8 @@
                                 <buildArg>--enable-https</buildArg>
                                 <buildArg>-H:+ReportExceptionStackTraces</buildArg>
                                 <buildArg>-H:+AddAllCharsets</buildArg>
-                                <buildArg>-Dfile.encoding=COMPAT</buildArg>
-                            </buildArgs>
+                                <buildArg>-Dfile.encoding=UTF-8</buildArg>
+                            </buildArgs>    
                         </configuration>
                     </plugin>
                 </plugins>
