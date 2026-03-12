@@ -31,18 +31,30 @@ jobs:
       - name: 📥 拉取代码
         uses: actions/checkout@v4
 
-      - name: ☕ 设置 GraalVM 21
+      # 👇 1. Windows 和 Linux x86 依然走正常的高速通道
+      - name: ☕ 设置 GraalVM 21 (仅限 x86 和 Windows)
+        if: matrix.os != 'ubuntu-24.04-arm'
         uses: graalvm/setup-graalvm@v1
         with:
           java-version: '21'
           distribution: 'graalvm-community'
-          github-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: 🔨 执行 Maven 原生编译 (Native Image)
+      - name: 🔨 常规编译 (仅限 x86 和 Windows)
+        if: matrix.os != 'ubuntu-24.04-arm'
         env:
-            JAVA_TOOL_OPTIONS: "-Dfile.encoding=UTF-8"
+          JAVA_TOOL_OPTIONS: "-Dfile.encoding=UTF-8"
         run: mvn clean package -Pnative
 
+      # 👇 2. ARM64 专属编译通道：拉起 glibc 2.28 容器进行编译
+      - name: 🔨 ARM64 时光机编译 (降维至 glibc 2.28)
+        if: matrix.os == 'ubuntu-24.04-arm'
+        # 使用 Oracle Linux 8 镜像 (glibc 2.28)，挂载代码目录，安装 maven 并执行编译
+        run: |
+          docker run --rm -v ${{ github.workspace }}:/app -w /app \
+          ghcr.io/graalvm/native-image-community:21-ol8 \
+          bash -c "microdnf install -y maven && export JAVA_TOOL_OPTIONS='-Dfile.encoding=UTF-8' && mvn clean package -Pnative && chmod -R 777 target"
+
+      # 👇 3. 统一重命名并上传 (所有架构共用)
       - name: 📦 重命名产物并准备上传
         run: |
           mv target/${{ matrix.executable }} target/gitee-cli-${{ runner.os }}-${{ matrix.arch }}${{ matrix.target_ext }}
