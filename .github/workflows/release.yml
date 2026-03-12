@@ -48,11 +48,11 @@ jobs:
       # 👇 2. ARM64 专属编译通道：拉起 glibc 2.28 容器进行编译
       - name: 🔨 ARM64 时光机编译 (降维至 glibc 2.28)
         if: matrix.os == 'ubuntu-24.04-arm'
-        # 使用 Oracle Linux 8 镜像 (glibc 2.28)，挂载代码目录，安装 maven 并执行编译
+        # 核心改动：加入 --entrypoint bash 强行覆盖官方的默认启动程序
         run: |
-          docker run --rm -v ${{ github.workspace }}:/app -w /app \
+          docker run --rm --entrypoint bash -v ${{ github.workspace }}:/app -w /app \
           ghcr.io/graalvm/native-image-community:21-ol8 \
-          bash -c "microdnf install -y maven && export JAVA_TOOL_OPTIONS='-Dfile.encoding=UTF-8' && mvn clean package -Pnative && chmod -R 777 target"
+          -c "microdnf install -y maven && export JAVA_TOOL_OPTIONS='-Dfile.encoding=UTF-8' && mvn clean package -Pnative && chmod -R 777 target"
 
       # 👇 3. 统一重命名并上传 (所有架构共用)
       - name: 📦 重命名产物并准备上传
