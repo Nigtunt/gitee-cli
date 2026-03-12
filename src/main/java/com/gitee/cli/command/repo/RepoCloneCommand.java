@@ -6,6 +6,8 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 /**
  * {@code gitee repo clone} — 克隆仓库到本地。
@@ -27,18 +29,14 @@ public class RepoCloneCommand extends BaseCommand {
     @Override
     public void run() {
         var repo = requireRepo();
-        var parts = splitRepo(repo);
-        var owner = parts[0];
-        var repoName = parts[1];
 
         // GET /repos/{owner}/{repo} 获取 clone URL
         var repoInfo = GiteeApiClient.getInstance().get(
-                "/projects/" + owner + "/" + repoName,
-                null);
+                "/projects/" + URLEncoder.encode(repo, StandardCharsets.UTF_8), null);
 
         var cloneUrl = useSsh
-                ? repoInfo.path("ssh_url").asText()
-                : repoInfo.path("clone_url").asText();
+                ? repoInfo.path("ssh_url_to_repo").asText()
+                : repoInfo.path("http_url_to_repo").asText();
 
         if (cloneUrl == null || cloneUrl.isBlank()) {
             throw new IllegalStateException("Could not determine clone URL for " + repo);
