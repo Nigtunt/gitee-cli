@@ -1,6 +1,5 @@
 package com.gitee.cli.command.config;
 
-import com.gitee.cli.AnsiColor;
 import com.gitee.cli.ConfigManager;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
@@ -29,19 +28,19 @@ public class ConfigSetCommand implements Runnable {
         switch (key) {
             case "base_url" -> {
                 ConfigManager.saveBaseUrl(value);
-                System.out.println(AnsiColor.success("base_url = " + value));
+                System.out.println("base_url = " + value);
             }
             case "token" -> {
                 ConfigManager.saveToken(value);
-                System.out.println(AnsiColor.success("token saved (use 'gitee auth login' for validation)"));
+                System.out.println("token saved (use 'gitee auth login' for validation)");
             }
             case "remote_pattern" -> {
                 ConfigManager.saveRemotePattern(value);
-                System.out.println(AnsiColor.success("remote_pattern = " + value));
+                System.out.println("remote_pattern = " + value);
             }
             default -> {
-                System.err.println(AnsiColor.error("Unknown config key: " + key));
-                System.err.println(AnsiColor.dim("  Available keys: base_url, token, remote_pattern"));
+                System.err.println("Unknown config key: " + key);
+                System.err.println("  Available keys: base_url, token, remote_pattern");
             }
         }
     }

@@ -1,6 +1,5 @@
 package com.gitee.cli.command.config;
 
-import com.gitee.cli.AnsiColor;
 import com.gitee.cli.ConfigManager;
 import picocli.CommandLine.Command;
 
@@ -14,22 +13,22 @@ public class ConfigListCommand implements Runnable {
 
     @Override
     public void run() {
-        System.out.println(AnsiColor.bold("测试中文乱码Config file: ") + ConfigManager.getConfigFile());
-        System.out.println(AnsiColor.bold("Exists:      ") + Files.exists(ConfigManager.getConfigFile()));
+        System.out.println("测试中文乱码Config file: " + ConfigManager.getConfigFile());
+        System.out.println("Exists:      " + Files.exists(ConfigManager.getConfigFile()));
         System.out.println();
 
         // base_url
-        System.out.println(AnsiColor.cyan("base_url") + "       = " + ConfigManager.loadBaseUrl());
+        System.out.println("base_url" + "       = " + ConfigManager.loadBaseUrl());
 
         // remote_pattern
-        System.out.println(AnsiColor.cyan("remote_pattern") + " = " + ConfigManager.loadRemotePattern());
+        System.out.println("remote_pattern" + " = " + ConfigManager.loadRemotePattern());
 
         // token
         var token = ConfigManager.loadToken();
         if (token != null) {
-            System.out.println(AnsiColor.cyan("token") + "          = " + maskToken(token));
+            System.out.println("token" + "          = " + maskToken(token));
         } else {
-            System.out.println(AnsiColor.cyan("token") + "          = " + AnsiColor.dim("(not set)"));
+            System.out.println("token" + "          = " + "(not set)");
         }
     }
 

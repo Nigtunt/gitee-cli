@@ -3,10 +3,6 @@ package com.gitee.cli;
 import java.io.FileDescriptor;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
-import java.io.UnsupportedEncodingException;
-import java.util.Arrays;
-
-import org.fusesource.jansi.AnsiConsole;
 
 import com.gitee.cli.command.auth.AuthCommand;
 import com.gitee.cli.command.config.ConfigCommand;
@@ -65,24 +61,14 @@ public class GiteeCliCommand implements Runnable {
         // 1. 拦截底层输出流：如果是 Windows，且是人类在测试，且不是 JSON 模式，强行用 GBK 翻译输出！
         if (os.contains("windows") && System.console() != null) {
             try {
-                System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out), true, "GBK"));
+                System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out), true,
+                        "GBK"));
             } catch (Exception ignored) {
             }
-        }
-
-        try {
-            AnsiConsole.systemInstall();
-        } catch (Exception ignored) {
         }
         int exitCode = new CommandLine(new GiteeCliCommand())
                 .setExecutionExceptionHandler(new GlobalExceptionHandler())
                 .execute(args);
-
-        // 4. 优雅卸载 JAnsi
-        try {
-            AnsiConsole.systemUninstall();
-        } catch (Exception ignored) {
-        }
 
         // 严格返回状态码，这对大模型 Agent 判断命令是否成功极其重要
         System.exit(exitCode);

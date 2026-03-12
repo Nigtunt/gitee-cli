@@ -1,7 +1,6 @@
 package com.gitee.cli.command.auth;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.gitee.cli.AnsiColor;
 import com.gitee.cli.ConfigManager;
 import com.gitee.cli.GiteeApiClient;
 import com.gitee.cli.command.BaseCommand;
@@ -22,21 +21,21 @@ public class AuthLoginCommand extends BaseCommand {
     @Override
     public void run() {
         // 1. 先验证 token 是否有效：调用 GET /user
-        System.out.println(AnsiColor.info("Verifying token..."));
+        System.out.println("Verifying token...");
 
         var testClient = GiteeApiClient.withToken(token);
         JsonNode user;
         try {
             user = testClient.get("/user", null);
         } catch (Exception e) {
-            System.err.println(AnsiColor.error("Token verification failed — " + e.getMessage()));
-            System.err.println(AnsiColor.dim("  Please check your token and try again."));
+            System.err.println("Token verification failed — " + e.getMessage());
+            System.err.println("  Please check your token and try again.");
             return;
         }
 
         var login = user.path("id").asText("");
         if (login.isEmpty()) {
-            System.err.println(AnsiColor.error("Token appears invalid — could not retrieve user info."));
+            System.err.println("Token appears invalid — could not retrieve user info.");
             return;
         }
 
@@ -49,11 +48,11 @@ public class AuthLoginCommand extends BaseCommand {
         var email = user.path("email").asText("");
         var gitEmail = user.path("git_email").asText("");
 
-        System.out.println(AnsiColor.success("Login successful!"));
-        System.out.println(AnsiColor.info("  Username : " + AnsiColor.bold(username)));
-        System.out.println(AnsiColor.info("  Name     : " + AnsiColor.bold(name)));
-        System.out.println(AnsiColor.info("  Email    : " + AnsiColor.bold(email)));
-        System.out.println(AnsiColor.info("  Git Email: " + AnsiColor.bold(gitEmail)));
-        System.out.println(AnsiColor.dim("  Token saved to: " + ConfigManager.getConfigFile()));
+        System.out.println("Login successful!");
+        System.out.println("  Username : " + username);
+        System.out.println("  Name     : " + name);
+        System.out.println("  Email    : " + email);
+        System.out.println("  Git Email: " + gitEmail);
+        System.out.println("  Token saved to: " + ConfigManager.getConfigFile());
     }
 }

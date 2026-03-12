@@ -12,6 +12,16 @@
     ]
   },
   {
+    "name" : "com.gitee.cli.command.BaseCommand",
+    "allDeclaredConstructors" : true,
+    "allPublicConstructors" : true,
+    "allDeclaredMethods" : true,
+    "allPublicMethods" : true,
+    "fields" : [
+      { "name" : "spec" }
+    ]
+  },
+  {
     "name" : "com.gitee.cli.command.auth.AuthCommand",
     "allDeclaredConstructors" : true,
     "allPublicConstructors" : true,

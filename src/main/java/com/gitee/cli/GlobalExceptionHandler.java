@@ -12,7 +12,7 @@ public class GlobalExceptionHandler implements IExecutionExceptionHandler {
     @Override
     public int handleExecutionException(Exception ex, CommandLine cmd, ParseResult parseResult) {
         // 错误信息输出到 stderr（红色）
-        System.err.println(AnsiColor.red("Error: " + ex.getMessage()));
+        System.err.println("Error: " + ex.getMessage());
 
         // Java 21 pattern matching for instanceof
         if (ex instanceof GiteeApiException apiEx) {

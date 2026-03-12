@@ -1,6 +1,5 @@
 package com.gitee.cli.command.config;
 
-import com.gitee.cli.AnsiColor;
 import com.gitee.cli.ConfigManager;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
@@ -24,13 +23,13 @@ public class ConfigGetCommand implements Runnable {
                     // 遮罩输出
                     System.out.println(maskToken(token));
                 } else {
-                    System.out.println(AnsiColor.dim("(not set)"));
+                    System.out.println("(not set)");
                 }
             }
             case "remote_pattern" -> System.out.println(ConfigManager.loadRemotePattern());
             default -> {
-                System.err.println(AnsiColor.error("Unknown config key: " + key));
-                System.err.println(AnsiColor.dim("  Available keys: base_url, token, remote_pattern"));
+                System.err.println("Unknown config key: " + key);
+                System.err.println("  Available keys: base_url, token, remote_pattern");
             }
         }
     }

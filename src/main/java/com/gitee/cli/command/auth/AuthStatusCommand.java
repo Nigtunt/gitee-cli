@@ -1,6 +1,5 @@
 package com.gitee.cli.command.auth;
 
-import com.gitee.cli.AnsiColor;
 import com.gitee.cli.ConfigManager;
 import com.gitee.cli.command.BaseCommand;
 import picocli.CommandLine.Command;
@@ -16,23 +15,23 @@ public class AuthStatusCommand extends BaseCommand {
         // 检查环境变量
         var envToken = System.getenv("GITEE_TOKEN");
         if (envToken != null && !envToken.isBlank()) {
-            System.out.println(AnsiColor.success("Authenticated via environment variable GITEE_TOKEN"));
-            System.out.println(AnsiColor.dim("  Token: " + maskToken(envToken)));
+            System.out.println("Authenticated via environment variable GITEE_TOKEN");
+            System.out.println("  Token: " + maskToken(envToken));
             return;
         }
 
         // 检查配置文件
         var fileToken = ConfigManager.loadToken();
         if (fileToken != null && !fileToken.isBlank()) {
-            System.out.println(AnsiColor.success("Authenticated via config file"));
-            System.out.println(AnsiColor.dim("  Token:  " + maskToken(fileToken)));
-            System.out.println(AnsiColor.dim("  Config: " + ConfigManager.getConfigFile()));
+            System.out.println("Authenticated via config file");
+            System.out.println("  Token:  " + maskToken(fileToken));
+            System.out.println("  Config: " + ConfigManager.getConfigFile());
             return;
         }
 
         // 未认证
-        System.out.println(AnsiColor.error("Not authenticated."));
-        System.out.println(AnsiColor.yellow("  Run 'gitee auth login --token <your_token>' to authenticate."));
+        System.out.println("Not authenticated.");
+        System.out.println("  Run 'gitee auth login --token <your_token>' to authenticate.");
     }
 
     /**

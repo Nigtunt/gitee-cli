@@ -223,24 +223,24 @@ public final class GiteeApiClient {
         if (!debug)
             return;
 
-        System.err.println(AnsiColor.dim("───────── DEBUG: Request ─────────"));
-        System.err.println(AnsiColor.cyan(request.method() + " " + request.uri()));
-        System.err.println(AnsiColor.dim("Headers:"));
+        System.err.println("───────── DEBUG: Request ─────────");
+        System.err.println(request.method() + " " + request.uri());
+        System.err.println("Headers:");
         request.headers().map().forEach((name, values) -> {
             for (var value : values) {
                 // 隐藏 Token 值，只显示前 4 位
                 if ("Private-Token".equalsIgnoreCase(name) && value.length() > 4) {
-                    System.err.println(AnsiColor.dim("  " + name + ": " + value.substring(0, 4) + "****"));
+                    System.err.println("  " + name + ": " + value.substring(0, 4) + "****");
                 } else {
-                    System.err.println(AnsiColor.dim("  " + name + ": " + value));
+                    System.err.println("  " + name + ": " + value);
                 }
             }
         });
         if (body != null && !body.isBlank()) {
-            System.err.println(AnsiColor.dim("Body:"));
-            System.err.println(AnsiColor.dim("  " + body));
+            System.err.println("Body:");
+            System.err.println("  " + body);
         }
-        System.err.println(AnsiColor.dim("──────────────────────────────────"));
+        System.err.println("──────────────────────────────────");
     }
 
     /**
@@ -251,30 +251,30 @@ public final class GiteeApiClient {
             return;
 
         var status = response.statusCode();
-        var statusColor = (status >= 200 && status < 300) ? AnsiColor.green(String.valueOf(status))
-                : AnsiColor.red(String.valueOf(status));
+        var statusColor = (status >= 200 && status < 300) ? String.valueOf(status)
+                : String.valueOf(status);
 
-        System.err.println(AnsiColor.dim("───────── DEBUG: Response ────────"));
+        System.err.println("───────── DEBUG: Response ────────");
         System.err.println("Status: " + statusColor);
-        System.err.println(AnsiColor.dim("Headers:"));
+        System.err.println("Headers:");
         response.headers().map().forEach((name, values) -> {
             for (var value : values) {
-                System.err.println(AnsiColor.dim("  " + name + ": " + value));
+                System.err.println("  " + name + ": " + value);
             }
         });
 
         var body = response.body();
         if (body != null && !body.isBlank()) {
-            System.err.println(AnsiColor.dim("Body:"));
+            System.err.println("Body:");
             // 截断过长的响应体
             if (body.length() > 2000) {
-                System.err.println(AnsiColor.dim("  " + body.substring(0, 2000)));
-                System.err.println(AnsiColor.dim("  ... (" + body.length() + " chars total, truncated)"));
+                System.err.println("  " + body.substring(0, 2000));
+                System.err.println("  ... (" + body.length() + " chars total, truncated)");
             } else {
-                System.err.println(AnsiColor.dim("  " + body));
+                System.err.println("  " + body);
             }
         }
-        System.err.println(AnsiColor.dim("──────────────────────────────────"));
+        System.err.println("──────────────────────────────────");
     }
 
     /**
@@ -335,9 +335,9 @@ public final class GiteeApiClient {
         }
 
         // 3. 都没有 → 报错
-        System.err.println(AnsiColor.red("Error: Not authenticated."));
-        System.err.println(AnsiColor.yellow("Run 'gitee auth login --token <your_token>' to authenticate,"));
-        System.err.println(AnsiColor.yellow("or set environment variable GITEE_TOKEN."));
+        System.err.println("Error: Not authenticated.");
+        System.err.println("Run 'gitee auth login --token <your_token>' to authenticate,");
+        System.err.println("or set environment variable GITEE_TOKEN.");
         System.exit(ExitCode.CLIENT_ERROR);
         return null; // unreachable
     }

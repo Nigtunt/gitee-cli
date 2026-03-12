@@ -10,7 +10,6 @@ import java.util.List;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.gitee.cli.AnsiColor;
 import com.gitee.cli.GiteeApiClient;
 import com.gitee.cli.OutputHelper;
 import com.gitee.cli.command.BaseCommand;
@@ -124,13 +123,13 @@ public class IssueViewCommand extends BaseCommand {
         String description = stripHtml(rawDescription);
 
         // ── 第 1 行: title project#ident ──────────────────────
-        System.out.println(AnsiColor.bold(title) + " " + AnsiColor.dim(projectFullName + "#" + ident));
+        System.out.println(title + " " + projectFullName + "#" + ident);
 
         // ── 第 2 行: state • author opened X ago • N comments ─
         String stateDisplay = mapState(state);
         String formattedTime = formatDateTime(createdAt);
         String commentText = noteCount == 1 ? "1 comment" : noteCount + " comments";
-        System.out.println(AnsiColor.green(stateDisplay) + " • "
+        System.out.println(stateDisplay + " • "
                 + authorName + " opened " + formattedTime + " • " + commentText);
 
         // ── Labels ────────────────────────────────────────────
@@ -175,8 +174,8 @@ public class IssueViewCommand extends BaseCommand {
 
             if (hidden > 0) {
                 System.out.println();
-                System.out.println(AnsiColor.dim("———————— Not showing " + hidden + " comment"
-                        + (hidden != 1 ? "s" : "") + " ————————"));
+                System.out.println("———————— Not showing " + hidden + " comment"
+                        + (hidden != 1 ? "s" : "") + " ————————");
                 System.out.println();
             }
 
@@ -186,7 +185,7 @@ public class IssueViewCommand extends BaseCommand {
 
             if (hidden > 0) {
                 System.out.println();
-                System.out.println(AnsiColor.dim("Use --comments to view the full conversation"));
+                System.out.println("Use --comments to view the full conversation");
             }
         }
     }
@@ -199,7 +198,7 @@ public class IssueViewCommand extends BaseCommand {
         String noteText = stripHtml(note.has("body") ? note.path("body").asText("") : note.path("note").asText(""));
         String noteTime = formatDateTime(note.path("created_at").asText(""));
 
-        String header = AnsiColor.bold(commentAuthor) + " • " + noteTime;
+        String header = commentAuthor + " • " + noteTime;
         if (isNewest) {
             header += " • Newest comment";
         }

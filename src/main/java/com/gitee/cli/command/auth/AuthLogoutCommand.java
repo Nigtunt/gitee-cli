@@ -1,6 +1,5 @@
 package com.gitee.cli.command.auth;
 
-import com.gitee.cli.AnsiColor;
 import com.gitee.cli.ConfigManager;
 import com.gitee.cli.command.BaseCommand;
 import picocli.CommandLine.Command;
@@ -15,10 +14,10 @@ public class AuthLogoutCommand extends BaseCommand {
     public void run() {
         var deleted = ConfigManager.deleteToken();
         if (deleted) {
-            System.out.println(AnsiColor.success("Token removed from: " + ConfigManager.getConfigFile()));
-            System.out.println(AnsiColor.dim("  You are now logged out."));
+            System.out.println("Token removed from: " + ConfigManager.getConfigFile());
+            System.out.println("  You are now logged out.");
         } else {
-            System.out.println(AnsiColor.yellow("No saved token found. Already logged out."));
+            System.out.println("No saved token found. Already logged out.");
         }
     }
 }
