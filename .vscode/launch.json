@@ -1,0 +1,45 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Debug: pr list",
+            "request": "launch",
+            "mainClass": "com.gitee.cli.GiteeCliCommand",
+            "args": "pr list -R owner/repo",
+            "env": {
+                "GITEE_TOKEN": "在这里填入你的真实Token"
+            }
+        },
+        {
+            "type": "java",
+            "name": "Debug: pr view",
+            "request": "launch",
+            "mainClass": "com.gitee.cli.GiteeCliCommand",
+            "args": "pr view 1 -R owner/repo",
+            "env": {
+                "GITEE_TOKEN": "在这里填入你的真实Token"
+            }
+        },
+        {
+            "type": "java",
+            "name": "Debug: issue list",
+            "request": "launch",
+            "mainClass": "com.gitee.cli.GiteeCliCommand",
+            "args": "issue list -R owner/repo",
+            "env": {
+                "GITEE_TOKEN": "在这里填入你的真实Token"
+            }
+        },
+        {
+            "type": "java",
+            "name": "Debug: repo view",
+            "request": "launch",
+            "mainClass": "com.gitee.cli.GiteeCliCommand",
+            "args": "repo view -R owner/repo",
+            "env": {
+                "GITEE_TOKEN": "在这里填入你的真实Token"
+            }
+        }
+    ]
+}
