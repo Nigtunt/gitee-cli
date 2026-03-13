@@ -9,7 +9,8 @@ import picocli.CommandLine.Command;
         IssueListCommand.class,
         IssueViewCommand.class,
         IssueCreateCommand.class,
-        IssueCommentCommand.class
+        IssueCommentCommand.class,
+        IssueCloseCommand.class
 })
 public class IssueCommand implements Runnable {
 

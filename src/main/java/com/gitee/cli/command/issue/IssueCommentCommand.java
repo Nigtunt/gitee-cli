@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.gitee.cli.GiteeApiClient;
 import com.gitee.cli.OutputHelper;
 import com.gitee.cli.command.BaseCommand;
+import com.gitee.cli.utils.TimeUtils;
+
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
@@ -28,24 +30,33 @@ public class IssueCommentCommand extends BaseCommand {
     @Option(names = { "--body", "-b" }, description = "The comment body text")
     private String body;
 
-    /* 暂时不使用这些选项
-    @Option(names = { "--body-file", "-F" }, description = "Read body text from file (use \"-\" to read from standard input)")
-    private String bodyFile;
+    /*
+     * 暂时不使用这些选项
+     * 
+     * @Option(names = { "--body-file", "-F" }, description =
+     * "Read body text from file (use \"-\" to read from standard input)")
+     * private String bodyFile;
+     * 
+     * @Option(names = "--edit-last", description =
+     * "Edit the last comment of the current user")
+     * private boolean editLast;
+     * 
+     * @Option(names = "--create-if-none", description =
+     * "Create a new comment if no comments are found. Can be used only with --edit-last"
+     * )
+     * private boolean createIfNone;
+     * 
+     * @Option(names = "--delete-last", description =
+     * "Delete the last comment of the current user")
+     * private boolean deleteLast;
+     * 
+     * @Option(names = "--yes", description =
+     * "Skip the delete confirmation prompt when --delete-last is provided")
+     * private boolean skipConfirmation;
+     */
 
-    @Option(names = "--edit-last", description = "Edit the last comment of the current user")
-    private boolean editLast;
-
-    @Option(names = "--create-if-none", description = "Create a new comment if no comments are found. Can be used only with --edit-last")
-    private boolean createIfNone;
-
-    @Option(names = "--delete-last", description = "Delete the last comment of the current user")
-    private boolean deleteLast;
-
-    @Option(names = "--yes", description = "Skip the delete confirmation prompt when --delete-last is provided")
-    private boolean skipConfirmation;
-    */
-
-    @Option(names = { "--editor", "-e" }, description = "Skip prompts and open the text editor to write the body in (Not fully supported)")
+    @Option(names = { "--editor",
+            "-e" }, description = "Skip prompts and open the text editor to write the body in (Not fully supported)")
     private boolean editor;
 
     @Option(names = { "--web", "-w" }, description = "Open the web browser to write the comment (Not fully supported)")
@@ -54,7 +65,8 @@ public class IssueCommentCommand extends BaseCommand {
     @Override
     public void run() {
         if (editor || web) {
-            System.err.println("Warning: --editor and --web flags are not fully supported yet. Will proceed with basic input.");
+            System.err.println(
+                    "Warning: --editor and --web flags are not fully supported yet. Will proceed with basic input.");
         }
 
         var repo = requireRepo();
@@ -65,16 +77,16 @@ public class IssueCommentCommand extends BaseCommand {
 
         // 暂时不使用这些实现
         /*
-        if (deleteLast) {
-            handleDeleteLast(notesApiPath);
-            return;
-        }
-
-        if (editLast) {
-            handleEditLast(notesApiPath);
-            return;
-        }
-        */
+         * if (deleteLast) {
+         * handleDeleteLast(notesApiPath);
+         * return;
+         * }
+         * 
+         * if (editLast) {
+         * handleEditLast(notesApiPath);
+         * return;
+         * }
+         */
 
         // Default to create
         handleCreate(notesApiPath);
@@ -87,18 +99,20 @@ public class IssueCommentCommand extends BaseCommand {
             return;
         }
 
-        /* 暂时取消交互输入
-        if (!skipConfirmation) {
-            System.err.print("Are you sure you want to delete the last comment? [y/N] ");
-            @SuppressWarnings("resource")
-            Scanner scanner = new Scanner(System.in);
-            String input = scanner.nextLine().trim();
-            if (!input.equalsIgnoreCase("y") && !input.equalsIgnoreCase("yes")) {
-                System.out.println("Aborted.");
-                return;
-            }
-        }
-        */
+        /*
+         * 暂时取消交互输入
+         * if (!skipConfirmation) {
+         * System.err.print("Are you sure you want to delete the last comment? [y/N] ");
+         * 
+         * @SuppressWarnings("resource")
+         * Scanner scanner = new Scanner(System.in);
+         * String input = scanner.nextLine().trim();
+         * if (!input.equalsIgnoreCase("y") && !input.equalsIgnoreCase("yes")) {
+         * System.out.println("Aborted.");
+         * return;
+         * }
+         * }
+         */
 
         String noteId = lastNote.path("id").asText();
         GiteeApiClient.getInstance().delete(notesApiPath + "/" + noteId);
@@ -113,13 +127,16 @@ public class IssueCommentCommand extends BaseCommand {
     private void handleEditLast(String notesApiPath) {
         JsonNode lastNote = findLastCommentOfCurrentUser(notesApiPath);
         if (lastNote == null) {
-            /* 暂时不使用 createIfNone
-            if (createIfNone) {
-                handleCreate(notesApiPath);
-            } else {
-                System.err.println("No comments found for the current user. Use --create-if-none to create one.");
-            }
-            */
+            /*
+             * 暂时不使用 createIfNone
+             * if (createIfNone) {
+             * handleCreate(notesApiPath);
+             * } else {
+             * System.err.
+             * println("No comments found for the current user. Use --create-if-none to create one."
+             * );
+             * }
+             */
             System.err.println("No comments found for the current user.");
             return;
         }
@@ -152,6 +169,7 @@ public class IssueCommentCommand extends BaseCommand {
 
         var payload = new HashMap<String, Object>();
         payload.put("body", content);
+        payload.put("created_at", TimeUtils.getCurrentDateTime());
 
         var result = GiteeApiClient.getInstance().post(notesApiPath, payload);
 
@@ -171,8 +189,10 @@ public class IssueCommentCommand extends BaseCommand {
         String currentUserLogin = user.path("login").asText();
 
         // Optional logic: we'd need to paginate if there are many comments,
-        // but for simplicity we fetch the default page (which is usually the latest items on Gitee).
-        // Actually Gitee returns ascending or descending. Let's fetch recent by direction=desc if possible to get last comment faster.
+        // but for simplicity we fetch the default page (which is usually the latest
+        // items on Gitee).
+        // Actually Gitee returns ascending or descending. Let's fetch recent by
+        // direction=desc if possible to get last comment faster.
         var queryParams = new HashMap<String, String>();
         queryParams.put("sort", "created_at");
         queryParams.put("direction", "desc");
@@ -196,20 +216,21 @@ public class IssueCommentCommand extends BaseCommand {
         if (body != null && !body.isBlank()) {
             return body;
         }
-        /* 暂时不使用标准输入和文件输入
-        if (bodyFile != null) {
-            if ("-".equals(bodyFile)) {
-                return readFromStdin();
-            } else {
-                try {
-                    return Files.readString(Path.of(bodyFile), StandardCharsets.UTF_8);
-                } catch (IOException e) {
-                    System.err.println("Error reading file: " + e.getMessage());
-                    return null;
-                }
-            }
-        }
-        */
+        /*
+         * 暂时不使用标准输入和文件输入
+         * if (bodyFile != null) {
+         * if ("-".equals(bodyFile)) {
+         * return readFromStdin();
+         * } else {
+         * try {
+         * return Files.readString(Path.of(bodyFile), StandardCharsets.UTF_8);
+         * } catch (IOException e) {
+         * System.err.println("Error reading file: " + e.getMessage());
+         * return null;
+         * }
+         * }
+         * }
+         */
         return null; // Empty body, or no provided param
     }
 

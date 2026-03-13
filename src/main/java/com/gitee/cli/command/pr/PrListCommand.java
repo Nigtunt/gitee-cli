@@ -154,7 +154,7 @@ public class PrListCommand extends BaseCommand {
 
             String idStr = "" + iid;
             String updatedStr = formatDateTime(updatedAt);
-            rows.add(new String[] { idStr, stateStr, title, sourceBranch, targetBranch, updatedStr });
+            rows.add(new String[] { idStr, stateStr, sourceBranch, targetBranch, title, updatedStr });
         }
 
         int totalCount = metaNode != null ? metaNode.path("total_count").asInt(listNode.size()) : listNode.size();
@@ -167,9 +167,9 @@ public class PrListCommand extends BaseCommand {
         for (var row : rows) {
             idWidth = Math.max(idWidth, displayWidth(row[0]));
             stateWidth = Math.max(stateWidth, displayWidth(row[1]));
-            titleWidth = Math.max(titleWidth, displayWidth(row[2]));
-            sourceBranchWidth = Math.max(sourceBranchWidth, displayWidth(row[3]));
-            targetBranchWidth = Math.max(targetBranchWidth, displayWidth(row[4]));
+            sourceBranchWidth = Math.max(sourceBranchWidth, displayWidth(row[2]));
+            targetBranchWidth = Math.max(targetBranchWidth, displayWidth(row[3]));
+            titleWidth = Math.max(titleWidth, displayWidth(row[4]));
         }
 
         System.out.printf("%nShowing %d of %d pull request(s) in %s/%s%n%n",
