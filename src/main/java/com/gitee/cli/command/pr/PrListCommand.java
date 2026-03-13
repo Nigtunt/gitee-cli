@@ -152,7 +152,7 @@ public class PrListCommand extends BaseCommand {
             String targetBranch = pr.path("target_branch").asText();
             String updatedAt = pr.path("updated_at").asText("");
 
-            String idStr = "#" + iid;
+            String idStr = "" + iid;
             String updatedStr = formatDateTime(updatedAt);
             rows.add(new String[] { idStr, stateStr, title, sourceBranch, targetBranch, updatedStr });
         }
@@ -175,12 +175,14 @@ public class PrListCommand extends BaseCommand {
         System.out.printf("%nShowing %d of %d pull request(s) in %s/%s%n%n",
                 rows.size(), totalCount, owner, repoName);
 
-        System.out.printf("%-" + idWidth + "s  %-" + stateWidth + "s  %-" + titleWidth + "s  %s%n",
-                "ID", "STATE", "TITLE", "UPDATED");
+        System.out.printf(
+                "%-" + idWidth + "s  %-" + stateWidth + "s  %-" + sourceBranchWidth + "s  %-" + targetBranchWidth
+                        + "s  %-" + titleWidth + "s  %s%n",
+                "ID", "STATE", "SOURCE_BRANCH", "TARGET_BRANCH", "TITLE", "UPDATED");
 
         for (var row : rows) {
-            System.out.printf("%-" + idWidth + "s  %-" + stateWidth + "s  %-" + titleWidth + "s  %-" +
-                    sourceBranchWidth + "s  %-" + targetBranchWidth + "s  %s%n",
+            System.out.printf("%-" + idWidth + "s  %-" + stateWidth + "s  %-" + sourceBranchWidth + "s  %-" +
+                    targetBranchWidth + "s  %-" + titleWidth + "s  %s%n",
                     row[0], row[1], row[2], row[3], row[4], row[5]);
         }
     }

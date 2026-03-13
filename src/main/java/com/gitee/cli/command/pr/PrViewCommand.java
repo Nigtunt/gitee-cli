@@ -40,16 +40,17 @@ public class PrViewCommand extends BaseCommand {
             System.out.println("PR #" + result.path("iid").asText());
             System.out.println("Title:       " + result.path("title").asText());
             System.out.println("State:       " + result.path("state").asText());
-            System.out.println("Author:      " + result.path("author").path("username").asText(result.path("user").path("login").asText("Unknown")));
-            
+            System.out.println("Author:      " + result.path("author").path("name").asText("Unknown"));
             System.out.println("Created:     " + formatDateTime(result.path("created_at").asText()));
             System.out.println("Updated:     " + formatDateTime(result.path("updated_at").asText()));
-            
-            String headLabel = result.has("source_branch") ? result.path("source_branch").asText() : result.path("head").path("label").asText("");
-            String baseLabel = result.has("target_branch") ? result.path("target_branch").asText() : result.path("base").path("label").asText("");
+
+            String headLabel = result.has("source_branch") ? result.path("source_branch").asText()
+                    : result.path("head").path("label").asText("");
+            String baseLabel = result.has("target_branch") ? result.path("target_branch").asText()
+                    : result.path("base").path("label").asText("");
             System.out.println("Branch:      " + headLabel + " -> " + baseLabel);
-            
-            System.out.println("URL:         " + result.path("html_url").asText());
+
+            System.out.println("URL:         " + result.path("web_url").asText());
 
             var body = result.has("body") ? result.path("body").asText("") : result.path("description").asText("");
             if (!body.isEmpty()) {

@@ -57,6 +57,15 @@ public class GiteeCliCommand implements Runnable {
     // ── 入口 ──────────────────────────────────────────────────
 
     public static void main(String[] args) {
+        // 1. 获取操作系统真正创建这个进程的绝对时间戳
+        long osProcessStartTime = ProcessHandle.current().info().startInstant().get().toEpochMilli();
+        // 2. 获取 main 方法开始执行的时间戳
+        long mainStartTime = System.currentTimeMillis();
+
+        // 如果启用了 debug，打印启动耗时
+        if (Arrays.asList(args).contains("--debug")) {
+            System.err.println("[System] OS进程分配 -> main()启动 耗时: " + (mainStartTime - osProcessStartTime) + " ms");
+        }
         // 如果大模型带了 --json 参数，强行将底层输出流锁死为 UTF-8，防止解析崩溃
         if (Arrays.asList(args).contains("--json")) {
             try {

@@ -66,7 +66,8 @@ public class IssueListCommand extends BaseCommand {
         var result = GiteeApiClient.getInstance().get(
                 "/projects/" + URLEncoder.encode(repo, StandardCharsets.UTF_8) + "/issues", params);
 
-        // 解析新数据结构: {data: {list: [...]}, meta: {current_page, total_count, total_pages}}
+        // 解析新数据结构: {data: {list: [...]}, meta: {current_page, total_count,
+        // total_pages}}
         JsonNode listNode = result.path("data").path("list");
         JsonNode metaNode = result.path("meta");
         boolean isJson = isJsonOutput();
@@ -107,8 +108,9 @@ public class IssueListCommand extends BaseCommand {
             ObjectNode cleanIssue = mapper.createObjectNode();
             cleanIssue.put("id", issue.path("iid").asText());
             cleanIssue.put("title", issue.path("title").asText());
-            cleanIssue.put("description", issue.has("body") ? issue.path("body").asText() : issue.path("description").asText());
-            
+            cleanIssue.put("description",
+                    issue.has("body") ? issue.path("body").asText() : issue.path("description").asText());
+
             ArrayNode labelsArray = mapper.createArrayNode();
             JsonNode labelsNode = issue.path("labels");
             if (labelsNode != null && labelsNode.isArray()) {
@@ -138,7 +140,7 @@ public class IssueListCommand extends BaseCommand {
             String updatedAt = issue.path("updated_at").asText("");
             JsonNode labelsNode = issue.path("labels");
 
-            String idStr = "#" + iid;
+            String idStr = "" + iid;
             String labelsStr = formatLabels(labelsNode);
             String updatedStr = formatDateTime(updatedAt);
             rows.add(new String[] { idStr, title, labelsStr, updatedStr });

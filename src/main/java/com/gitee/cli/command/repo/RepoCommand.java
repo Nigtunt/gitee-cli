@@ -7,8 +7,7 @@ import picocli.CommandLine.Command;
  */
 @Command(name = "repo", mixinStandardHelpOptions = true, description = "Manage repositories.", subcommands = {
         RepoViewCommand.class,
-        RepoCloneCommand.class,
-        RepoForkCommand.class
+        RepoCloneCommand.class
 })
 public class RepoCommand implements Runnable {
 
