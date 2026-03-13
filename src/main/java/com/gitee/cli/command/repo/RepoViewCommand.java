@@ -22,7 +22,7 @@ import java.util.Base64;
 @Command(name = "view", description = "View repository information and README.")
 public class RepoViewCommand extends BaseCommand {
 
-    @Option(names = {"-f", "--file"}, description = "Path to the file to view (default is README.md)")
+    @Option(names = { "-f", "--file" }, description = "Path to the file to view (default is README.md)")
     private String filePath;
 
     @Override
@@ -54,12 +54,13 @@ public class RepoViewCommand extends BaseCommand {
             try {
                 String encodedPath = URLEncoder.encode(targetFile, StandardCharsets.UTF_8).replace("+", "%20");
                 var fileResponse = GiteeApiClient.getInstance().get(
-                        "/projects/" + URLEncoder.encode(repo, StandardCharsets.UTF_8) + "/repository/files/" + encodedPath + "?ref=" + repoInfo.path("default_branch").asText("master"),
+                        "/projects/" + URLEncoder.encode(repo, StandardCharsets.UTF_8) + "/repository/files/"
+                                + encodedPath + "?ref=" + repoInfo.path("default_branch").asText("master"),
                         null);
                 var content = fileResponse.path("content").asText("");
                 if (!content.isEmpty()) {
                     // Gitee 返回的 content 通常是 base64 编码
-                    var decoded = new String(Base64.getDecoder().decode(content.replaceAll("\\s", "")));
+                    var decoded = new String(Base64.getDecoder().decode(content.replaceAll("\\s", "")), "GBK");
                     System.out.println();
                     System.out.println("--- " + targetFile + " ---");
                     System.out.println(decoded);
