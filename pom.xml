@@ -141,6 +141,7 @@
                                 <buildArg>-H:+AddAllCharsets</buildArg>
                                 <buildArg>-J-Dfile.encoding=UTF-8</buildArg>
                                 <buildArg>-Dfile.encoding=UTF-8</buildArg>
+                                <!-- <buildArg>-Dfile.encoding=COMPAT</buildArg>  window打包配置防乱码 -->
                                 <buildArg>-H:PageSize=65536</buildArg>
                             </buildArgs>    
                         </configuration>
